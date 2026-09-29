@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pau &amp; Luis · 20.03.2027</title>
+  <meta name="description" content="Paulina y Luis se casan el 20 de marzo de 2027 en la Hacienda Chimalpa, Hidalgo.">
+
+  <!-- Vista previa al compartir el link (WhatsApp, Facebook, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luis-zepeda.github.io/boda-pau-luis/">
+  <meta property="og:title" content="Pau &amp; Luis · 20.03.2027">
+  <meta property="og:description" content="¡Nos casamos! Acompáñanos en la Hacienda Chimalpa, Hidalgo.">
+  <meta property="og:image" content="https://luis-zepeda.github.io/boda-pau-luis/assets/img/og.jpg">
+  <meta name="theme-color" content="#3B2A20">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preload" as="image" href="assets/img/pauyluis.webp">
+
+  <script>
+    // El sobre de apertura se muestra una vez por pestaña, salvo que se prefiera menos movimiento.
+    (function () {
+      try { if (sessionStorage.getItem("sobreAbierto")) return; } catch (e) {}
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      document.documentElement.classList.add("sobre-activo");
+    })();
+  </script>
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" } }
+  </script>
+</head>
+<body>
+
+  <!-- 0. Sobre de apertura (3D con Three.js, ver js/sobre.js) -->
+  <div class="sobre" id="sobre">
+    <canvas class="sobre__canvas" aria-hidden="true"></canvas>
+    <div class="sobre__fallback">
+      <p class="sobre__names">Pau &amp; Luis</p>
+      <p class="sobre__date">20 · 03 · 2027</p>
+      <button class="btn" type="button" id="sobre-open" hidden>Abrir invitación</button>
+    </div>
+    <button class="sobre__hint" type="button" id="sobre-hint" hidden>Toca para abrir</button>
+    <button class="sobre__skip" type="button" id="sobre-skip">Saltar</button>
+  </div>
+
+  <!-- 1. Portada -->
+  <header class="hero" id="inicio">
+    <div class="hero__content">
+      <p class="hero__kicker">Nos casamos</p>
+      <h1 class="hero__names">Pau <span>&amp;</span> Luis</h1>
+      <p class="hero__date">20 · 03 · 2027</p>
+      <p class="hero__place">Hacienda Chimalpa · Hidalgo</p>
+      <a class="btn btn--light" href="#invitacion">Ver invitación</a>
+    </div>
+    <a class="hero__scroll" href="#invitacion" aria-label="Bajar"></a>
+  </header>
+
+  <nav class="nav" aria-label="Secciones">
+    <a href="#itinerario">Itinerario</a>
+    <a href="#lugar">Lugar</a>
+    <a href="#vestimenta">Vestimenta</a>
+    <a href="#regalos">Regalos</a>
+    <a href="#hospedaje">Hospedaje</a>
+    <a href="#rsvp">Confirmar</a>
+  </nav>
+
+  <main>
+
+    <!-- 2. Invitación -->
+    <section class="section invitation" id="invitacion">
+      <div class="container narrow reveal">
+        <p class="guest-greeting" id="guest-greeting" hidden></p>
+        <div class="ornament" aria-hidden="true"><span></span></div>
+        <p class="lead">Con la bendición de Dios y de nuestros padres,<br>tenemos el honor de invitarte a celebrar nuestro matrimonio</p>
+        <h2 class="invitation__names">
+          Paulina Gachuz Pérez
+          <span class="script">&amp;</span>
+          Luis Alberto Zepeda Varela
+        </h2>
+        <p class="invitation__date">Sábado 20 de marzo de 2027</p>
+        <div class="ornament" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- 3. Cuenta regresiva -->
+    <section class="countdown" aria-label="Cuenta regresiva">
+      <div class="countdown__inner reveal">
+        <p class="eyebrow eyebrow--light">Faltan</p>
+        <div class="countdown__grid" id="countdown">
+          <div><span data-unit="days">--</span><small>días</small></div>
+          <div><span data-unit="hours">--</span><small>horas</small></div>
+          <div><span data-unit="minutes">--</span><small>minutos</small></div>
+          <div><span data-unit="seconds">--</span><small>segundos</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Itinerario -->
+    <section class="section" id="itinerario">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="eyebrow">20 de marzo de 2027</p>
+          <h2>Itinerario</h2>
+        </header>
+
+        <ol class="timeline">
+          <li class="event reveal">
+            <img src="assets/img/iglesia.webp" alt="Capilla de la Hacienda Chimalpa" loading="lazy" width="1440" height="960">
+            <div class="event__body">
+              <time>5:00 PM</time>
+              <h3>Ceremonia religiosa</h3>
+              <p>Capilla de la Hacienda Chimalpa</p>
+            </div>
+          </li>
+          <li class="event reveal">
+            <img src="assets/img/coctel.webp" alt="Patio con fuente de la hacienda" loading="lazy" width="1440" height="960">
+            <div class="event__body">
+              <time>6:00 PM</time>
+              <h3>Cóctel de bienvenida</h3>
+              <p>Jardines de la hacienda</p>
+            </div>
+          </li>
+          <li class="event reveal">
+            <img src="assets/img/banquete.webp" alt="Mesas del banquete bajo luces" loading="lazy" width="1080" height="1350">
+            <div class="event__body">
+              <time>7:00 PM</time>
+              <h3>Banquete</h3>
+              <p>¡A celebrar hasta que el cuerpo aguante!</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. Lugar -->
+    <section class="section section--stone" id="lugar">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="eyebrow">Dónde</p>
+          <h2>Hacienda Chimalpa</h2>
+          <p class="address">C. Morelos s/n, 43920 Chimalpa Tlalayote, Hgo., México</p>
+        </header>
+
+        <div class="venue reveal">
+          <div class="venue__photos">
+            <img src="assets/img/hacienda.webp" alt="Fachada de piedra de la Hacienda Chimalpa" loading="lazy" width="1200" height="1600">
+            <img src="assets/img/campana.webp" alt="Campana antigua de la hacienda" loading="lazy" width="1080" height="1350">
+          </div>
+          <div class="venue__map">
+            <iframe
+              title="Mapa de la Hacienda Chimalpa"
+              src="https://maps.google.com/maps?q=Hacienda%20Chimalpa%2C%20C.%20Morelos%20s%2Fn%2C%2043920%20Chimalpa%20Tlalayote%2C%20Hgo.&z=15&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <div class="venue__buttons">
+              <a class="btn" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&query=Hacienda%20Chimalpa%2C%20C.%20Morelos%20s%2Fn%2C%2043920%20Chimalpa%20Tlalayote%2C%20Hgo.">Google Maps</a>
+              <a class="btn btn--outline" target="_blank" rel="noopener"
+                 href="https://waze.com/ul?q=Hacienda%20Chimalpa%20Hidalgo&navigate=yes">Waze</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Galería -->
+    <section class="section" id="nosotros">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="eyebrow">Nosotros</p>
+          <h2>Pau &amp; Luis</h2>
+        </header>
+        <div class="gallery reveal">
+          <a href="assets/img/pauyluis.webp" data-lightbox="galeria" class="gallery__item gallery__item--wide"><img src="assets/img/pauyluis.webp" alt="Pau y Luis abrazados en una calle empedrada" loading="lazy"></a>
+          <a href="assets/img/img_6669.webp" data-lightbox="galeria" class="gallery__item gallery__item--tall"><img src="assets/img/img_6669.webp" alt="Pau y Luis junto a un carruaje" loading="lazy"></a>
+          <a href="assets/img/img_5953.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/img_5953.webp" alt="Pau y Luis en la playa" loading="lazy"></a>
+          <a href="assets/img/img_5954.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/img_5954.webp" alt="Pau y Luis vestidos de blanco" loading="lazy"></a>
+          <a href="assets/img/img_66680.webp" data-lightbox="galeria" class="gallery__item gallery__item--tall"><img src="assets/img/img_66680.webp" alt="Pau y Luis junto a una camioneta amarilla" loading="lazy"></a>
+          <a href="assets/img/img_6670.webp" data-lightbox="galeria" class="gallery__item gallery__item--tall"><img src="assets/img/img_6670.webp" alt="Pau y Luis frente a una fachada con enredaderas" loading="lazy"></a>
+          <a href="assets/img/hacienda3.webp" data-lightbox="galeria" class="gallery__item gallery__item--wide"><img src="assets/img/hacienda3.webp" alt="Edificios de ladrillo de la hacienda" loading="lazy"></a>
+          <a href="assets/img/hacienda2.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/hacienda2.webp" alt="Arcos de piedra de la hacienda" loading="lazy"></a>
+          <a href="assets/img/hacienda4.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/hacienda4.webp" alt="Escalera ornamentada de la hacienda" loading="lazy"></a>
+          <a href="assets/img/hacienda5.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/hacienda5.webp" alt="Fuente en el jardín de la hacienda" loading="lazy"></a>
+          <a href="assets/img/hacienda6.webp" data-lightbox="galeria" class="gallery__item"><img src="assets/img/hacienda6.webp" alt="Sendero entre cactus de la hacienda" loading="lazy"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Código de vestimenta -->
+    <section class="section section--stone" id="vestimenta">
+      <div class="container narrow reveal">
+        <header class="section__header">
+          <p class="eyebrow">Código de vestimenta</p>
+          <h2>Formal</h2>
+        </header>
+        <div class="dress">
+          <article class="dress__card">
+            <a href="assets/img/dresscode-ellas.webp" class="dress__photo" data-lightbox="vestimenta">
+              <img src="assets/img/dresscode-ellas.webp" alt="Ideas de vestidos largos en verde olivo, chocolate, terracota, durazno y rosa" loading="lazy" width="1080" height="1350">
+            </a>
+            <h3>Ellas</h3>
+            <p>Vestido largo</p>
+            <ul class="swatches" aria-label="Colores sugeridos">
+              <li style="--c:#4E5B31" title="Verde olivo"><span>Verde olivo</span></li>
+              <li style="--c:#8A9A3B" title="Verde pistache"><span>Verde pistache</span></li>
+              <li style="--c:#5A3A29" title="Chocolate"><span>Chocolate</span></li>
+              <li style="--c:#B5553A" title="Terracota"><span>Terracota</span></li>
+              <li style="--c:#E89A6B" title="Durazno"><span>Durazno</span></li>
+              <li style="--c:#D9A3A0" title="Rosa palo"><span>Rosa palo</span></li>
+            </ul>
+            <p class="dress__avoid">Evitar blanco, beige y amarillo</p>
+          </article>
+          <article class="dress__card">
+            <a href="assets/img/dresscode-ellos.webp" class="dress__photo" data-lightbox="vestimenta">
+              <img src="assets/img/dresscode-ellos.webp" alt="Ideas de trajes oscuros: smoking negro, azul marino, gris oxford y café" loading="lazy" width="1080" height="1350">
+            </a>
+            <h3>Ellos</h3>
+            <p>Traje oscuro o smoking</p>
+            <ul class="swatches" aria-label="Colores sugeridos">
+              <li style="--c:#1F1F1F" title="Negro"><span>Negro</span></li>
+              <li style="--c:#22304A" title="Azul marino"><span>Azul marino</span></li>
+              <li style="--c:#4A4D52" title="Gris Oxford"><span>Gris Oxford</span></li>
+              <li style="--c:#4A3226" title="Café"><span>Café</span></li>
+            </ul>
+            <p class="dress__avoid">Evitar colores claros</p>
+          </article>
+        </div>
+        <p class="note">La hacienda tiene jardines y empedrado; te sugerimos un calzado cómodo. Por la noche refresca, trae algo para cubrirte.</p>
+      </div>
+    </section>
+
+    <!-- 8. Mesa de regalos -->
+    <section class="section" id="regalos">
+      <div class="container narrow">
+        <header class="section__header reveal">
+          <p class="eyebrow">Mesa de regalos</p>
+          <h2>Tu presencia es nuestro mejor regalo</h2>
+          <p>Si además deseas tener un detalle con nosotros, te dejamos estas opciones:</p>
+        </header>
+        <div class="cards reveal">
+          <a class="card" href="https://www.amazon.com/wedding/share/PauLuis" target="_blank" rel="noopener">
+            <h3>Amazon</h3>
+            <p>Lista de bodas</p>
+            <span class="card__link">Ver lista</span>
+          </a>
+          <div class="card">
+            <h3>Transferencia</h3>
+            <p>Banco: <strong>Nubank</strong><br>CLABE: <strong id="clabe">638180000119990924</strong><br>A nombre de: <strong>Luis Alberto Zepeda Varela</strong></p>
+            <button class="card__link copy" type="button" data-copy="#clabe">Copiar CLABE</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Hospedaje y transporte -->
+    <section class="section section--stone" id="hospedaje">
+      <div class="container">
+        <header class="section__header reveal">
+          <p class="eyebrow">Hospedaje y transporte</p>
+          <h2>Cómo llegar y dónde quedarse</h2>
+        </header>
+        <div class="travel reveal">
+          <div class="travel__block">
+            <h3>Cómo llegar</h3>
+            <p>La hacienda está en Chimalpa Tlalayote, Hidalgo, cerca de Apan.</p>
+            <ul>
+              <li><strong>Desde CDMX:</strong> aproximadamente 1 h 45 min por la autopista México–Pirámides y la carretera a Apan.</li>
+              <li><strong>Desde Pachuca:</strong> aproximadamente 1 h por la carretera Pachuca–Ciudad Sahagún.</li>
+            </ul>
+            <!-- TODO: si habrá transporte desde algún punto, describirlo aquí -->
+            <p class="note">Si tomas, no manejes 🥂. Te recomendamos organizar un conductor designado o transporte.</p>
+          </div>
+          <div class="travel__block">
+            <h3>Hospedaje sugerido</h3>
+            <!-- TODO: hoteles reales, tarifas y códigos de descuento -->
+            <ul class="hotels">
+              <li><strong>Hotel en Apan</strong><span>Aprox. 15 min · Código: BODAPYL</span></li>
+              <li><strong>Hotel en Ciudad Sahagún</strong><span>Aprox. 25 min</span></li>
+              <li><strong>Hotel en Pachuca</strong><span>Aprox. 1 h</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. RSVP -->
+    <section class="section rsvp" id="rsvp">
+      <div class="container narrow reveal">
+        <header class="section__header">
+          <p class="eyebrow">Confirma tu asistencia</p>
+          <h2>¿Nos acompañas?</h2>
+          <!-- TODO: confirmar fecha límite -->
+          <p>Por favor confírmanos antes del <strong>20 de febrero de 2027</strong>.</p>
+        </header>
+
+        <!-- Se muestra cuando el link no trae un código de invitado válido -->
+        <div class="rsvp__nocode" id="rsvp-nocode">
+          <p>Para confirmar, abre el link personal que te enviamos por mensaje.</p>
+          <p class="note">¿No lo encuentras? Escríbenos y te lo reenviamos.</p>
+        </div>
+
+        <p class="rsvp__loading" id="rsvp-loading" hidden>Buscando tu invitación…</p>
+
+        <!-- El link trae un código que no está en la lista -->
+        <div class="rsvp__nocode" id="rsvp-notfound" hidden>
+          <p>No encontramos tu invitación. Revisa que abriste el link completo que te enviamos.</p>
+          <p class="note">Si el problema sigue, escríbenos y te lo reenviamos.</p>
+        </div>
+
+        <!-- Se muestra cuando el invitado ya respondió -->
+        <div class="rsvp__done" id="rsvp-done" hidden>
+          <span class="rsvp__check" aria-hidden="true">✓</span>
+          <h3 id="rsvp-done-title"></h3>
+          <p id="rsvp-done-detail"></p>
+          <button class="btn btn--outline" type="button" id="rsvp-edit">Cambiar mi respuesta</button>
+        </div>
+
+        <form class="rsvp__form" id="rsvp-form" hidden>
+          <p class="rsvp__passes" id="rsvp-passes"></p>
+
+          <fieldset class="choice">
+            <legend>¿Asistirás?</legend>
+            <label><input type="radio" name="asistencia" value="si" required> Sí, ahí estaré</label>
+            <label><input type="radio" name="asistencia" value="no"> No podré asistir</label>
+          </fieldset>
+
+          <label class="field" id="field-confirmados">
+            <span>¿Cuántas personas asistirán?</span>
+            <select name="confirmados" id="confirmados"></select>
+          </label>
+
+          <label class="field" id="field-nombres">
+            <span>Nombres de quienes asisten</span>
+            <input type="text" name="nombres" autocomplete="off" placeholder="Ej. Ana López, Juan Pérez">
+          </label>
+
+          <label class="field">
+            <span>Alergias o restricciones alimentarias</span>
+            <input type="text" name="alergias" placeholder="Opcional">
+          </label>
+
+          <label class="field">
+            <span>Mensaje para los novios</span>
+            <textarea name="mensaje" rows="3" placeholder="Opcional"></textarea>
+          </label>
+
+          <button class="btn" type="submit">Enviar confirmación</button>
+          <p class="rsvp__status" id="rsvp-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 11. Pie -->
+  <footer class="footer">
+    <p class="footer__names">Pau &amp; Luis</p>
+    <p>20 · 03 · 2027 · Hacienda Chimalpa</p>
+    <button class="btn btn--light" type="button" id="add-calendar">Agregar a mi calendario</button>
+  </footer>
+
+  <!-- Música: "Father Ocean (Ben Böhmer Remix)", fragmento 1:30–4:00 -->
+  <audio id="musica" src="assets/audio/father-ocean.mp3" preload="none" loop></audio>
+  <button class="music" id="music-toggle" type="button" aria-label="Reproducir música" aria-pressed="false">
+    <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- Lightbox de la galería -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" type="button" aria-label="Cerrar">&times;</button>
+    <button class="lightbox__prev" type="button" aria-label="Anterior">&#8249;</button>
+    <img alt="">
+    <button class="lightbox__next" type="button" aria-label="Siguiente">&#8250;</button>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script type="module" src="js/sobre.js"></script>
+</body>
+</html>
