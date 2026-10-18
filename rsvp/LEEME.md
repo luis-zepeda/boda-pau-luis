@@ -47,7 +47,7 @@ Las columnas se buscan por su **encabezado**, así que el orden no importa.
 ## Primera vez: cargar la lista
 
 1. **Script:** en la hoja, ve a **Extensiones → Apps Script**. Reemplaza todo el código por el de `apps-script.gs` y guarda.
-2. **Publicar sin cambiar la URL:** **Implementar → Administrar implementaciones →** lápiz ✏️ **→ Versión: Nueva versión → Implementar** (la implementación que termina en `…QlTrI9Sg`). No uses "Nueva implementación", porque crea otra URL.
+2. **Publicar sin cambiar la URL:** **Implementar → Administrar implementaciones →** lápiz ✏️ **→ Versión: Nueva versión → Implementar** (la implementación que termina en `…MkSa-0w`). No uses "Nueva implementación", porque crea otra URL.
 3. **Importar el CSV:** recarga la hoja, abre la pestaña **Invitados** (créala si no existe) y ve a **Archivo → Importar → Subir** `boda-invitados.csv` **→ Reemplazar hoja actual**.
 4. **Vaciar la columna codigo** (deja el encabezado). Los códigos se generan de nuevo con parte aleatoria.
 5. **💍 Boda → Preparar hoja.** Agrega las columnas que falten y renombra la pestaña de respuestas anterior. Acepta los permisos.

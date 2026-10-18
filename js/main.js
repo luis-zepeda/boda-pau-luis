@@ -2,7 +2,7 @@
   "use strict";
 
   // URL del Web App de Google Apps Script: lista de invitados y respuestas (ver rsvp/LEEME.md).
-  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzcSewLJSWxglYoAd67pPE_UeMG9TrozDn09qX3O9_WF6Yfx-JS-HcugNsF--QlTrI9Sg/exec";
+  const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbz1Vbj63L5YJVnusPsPff4QiOYhh4b41prBmXnaDd1-H_Fx968mabYbv9UvCy1MkSa-0w/exec";
 
   // Primer evento de cada lista, hora del centro de México (UTC-6, sin horario de verano).
   //   civil: fin de semana + boda civil · finde: fin de semana · sabado: solo sábado
