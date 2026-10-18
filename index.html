@@ -52,6 +52,7 @@
       <p class="hero__kicker">Nos casamos</p>
       <h1 class="hero__names">Pau <span>&amp;</span> Luis</h1>
       <p class="hero__date">20 · 03 · 2027</p>
+      <p class="hero__weekend" data-listas="civil finde" hidden>Fin de semana de boda · 19 al 21 de marzo</p>
       <p class="hero__place">Hacienda Chimalpa · Hidalgo</p>
       <a class="btn btn--light" href="#invitacion">Ver invitación</a>
     </div>
@@ -74,13 +75,19 @@
       <div class="container narrow reveal">
         <p class="guest-greeting" id="guest-greeting" hidden></p>
         <div class="ornament" aria-hidden="true"><span></span></div>
-        <p class="lead">Con la bendición de Dios y de nuestros padres,<br>tenemos el honor de invitarte a celebrar nuestro matrimonio</p>
+        <p class="lead">Con la bendición de Dios y de nuestros padres,<br>
+          <span data-listas="sabado">tenemos el honor de invitarte a celebrar nuestro matrimonio</span>
+          <span data-listas="civil finde" hidden>tenemos el honor de invitarte a celebrar con nosotros el fin de semana de nuestra boda</span>
+        </p>
         <h2 class="invitation__names">
           Paulina Gachuz Pérez
           <span class="script">&amp;</span>
           Luis Alberto Zepeda Varela
         </h2>
-        <p class="invitation__date">Sábado 20 de marzo de 2027</p>
+        <p class="invitation__date">
+          <span data-listas="sabado">Sábado 20 de marzo de 2027</span>
+          <span data-listas="civil finde" hidden>Del viernes 19 al domingo 21 de marzo de 2027</span>
+        </p>
         <div class="ornament" aria-hidden="true"><span></span></div>
       </div>
     </section>
@@ -102,9 +109,43 @@
     <section class="section" id="itinerario">
       <div class="container">
         <header class="section__header reveal">
-          <p class="eyebrow">20 de marzo de 2027</p>
+          <p class="eyebrow">
+            <span data-listas="sabado">20 de marzo de 2027</span>
+            <span data-listas="civil finde" hidden>19 al 21 de marzo de 2027</span>
+          </p>
           <h2>Itinerario</h2>
         </header>
+
+        <!-- Fin de semana: un día por pestaña. En el sábado se insertan las tarjetas con foto (js/main.js). -->
+        <div class="days reveal" data-listas="civil finde" hidden>
+          <div class="days__tabs" role="tablist" aria-label="Días">
+            <button type="button" role="tab" id="tab-vie" aria-controls="dia-vie" aria-selected="true">Viernes <small>19</small></button>
+            <button type="button" role="tab" id="tab-sab" aria-controls="dia-sab" aria-selected="false" tabindex="-1">Sábado <small>20</small></button>
+            <button type="button" role="tab" id="tab-dom" aria-controls="dia-dom" aria-selected="false" tabindex="-1">Domingo <small>21</small></button>
+          </div>
+
+          <div class="day" id="dia-vie" role="tabpanel" aria-labelledby="tab-vie">
+            <ol class="schedule">
+              <li data-listas="civil" hidden><time>7:00 PM</time><div><h3>Boda civil</h3><p>El inicio de todo, en la hacienda</p></div></li>
+              <li data-listas="civil" hidden><time>8:00 PM</time><div><h3>Cena</h3><p>Una cena íntima para celebrar</p></div></li>
+              <li><time>10:00 PM</time><div><h3>Pre-fiesta</h3><p>Un par de horas para entrar en calor</p></div></li>
+            </ol>
+          </div>
+
+          <div class="day" id="dia-sab" role="tabpanel" aria-labelledby="tab-sab" hidden>
+            <ol class="schedule">
+              <li><time>9:00 AM</time><div><h3>Desayuno</h3><p>Para quienes nos acompañan todo el fin de semana</p></div></li>
+              <li><time>11:15 AM</time><div><h3>Tour guiado</h3><p>Recorrido por la historia de la hacienda</p></div></li>
+              <li><time>1:00 PM</time><div><h3>Brunch</h3><p>Algo ligero antes de arreglarnos</p></div></li>
+            </ol>
+          </div>
+
+          <div class="day" id="dia-dom" role="tabpanel" aria-labelledby="tab-dom" hidden>
+            <ol class="schedule">
+              <li><time>11:00 AM</time><div><h3>Desayuno regional</h3><p>Para despedir el fin de semana juntos</p></div></li>
+            </ol>
+          </div>
+        </div>
 
         <ol class="timeline">
           <li class="event reveal">
@@ -127,8 +168,8 @@
             <img src="assets/img/banquete.webp" alt="Mesas del banquete bajo luces" loading="lazy" width="1080" height="1350">
             <div class="event__body">
               <time>7:00 PM</time>
-              <h3>Banquete</h3>
-              <p>¡A celebrar hasta que el cuerpo aguante!</p>
+              <h3>Fiesta y cena</h3>
+              <p>Salón Campanas · ¡A celebrar hasta que el cuerpo aguante!</p>
             </div>
           </li>
         </ol>
@@ -193,8 +234,20 @@
       <div class="container narrow reveal">
         <header class="section__header">
           <p class="eyebrow">Código de vestimenta</p>
-          <h2>Formal</h2>
+          <h2>
+            <span data-listas="sabado">Formal</span>
+            <span data-listas="civil finde" hidden>Viernes cóctel · Sábado formal</span>
+          </h2>
         </header>
+
+        <!-- TODO: confirmar el código de vestimenta del viernes -->
+        <article class="dress__friday" data-listas="civil finde" hidden>
+          <p class="eyebrow">Viernes 19</p>
+          <h3>Cóctel</h3>
+          <p>Formal casual. Ellas: vestido corto o midi. Ellos: traje sin corbata o saco y pantalón de vestir.</p>
+        </article>
+        <p class="eyebrow dress__day" data-listas="civil finde" hidden>Sábado 20 · Formal</p>
+
         <div class="dress">
           <article class="dress__card">
             <a href="assets/img/dresscode-ellas.webp" class="dress__photo" data-lightbox="vestimenta">
@@ -272,7 +325,12 @@
             <!-- TODO: si habrá transporte desde algún punto, describirlo aquí -->
             <p class="note">Si tomas, no manejes 🥂. Te recomendamos organizar un conductor designado o transporte.</p>
           </div>
-          <div class="travel__block">
+          <div class="travel__block" data-listas="civil finde" hidden>
+            <h3>Tu hospedaje</h3>
+            <p>Estás invitado a hospedarte con nosotros en la Hacienda Chimalpa durante el fin de semana.</p>
+            <p>La hacienda se pondrá en contacto contigo directamente para tu reservación.</p>
+          </div>
+          <div class="travel__block" data-listas="sabado">
             <h3>Hospedaje sugerido</h3>
             <!-- TODO: hoteles reales, tarifas y códigos de descuento -->
             <ul class="hotels">
@@ -290,7 +348,10 @@
       <div class="container narrow reveal">
         <header class="section__header">
           <p class="eyebrow">Confirma tu asistencia</p>
-          <h2>¿Nos acompañas?</h2>
+          <h2>
+            <span data-listas="sabado">¿Nos acompañas?</span>
+            <span data-listas="civil finde" hidden>¿Nos acompañas el fin de semana?</span>
+          </h2>
           <!-- TODO: confirmar fecha límite -->
           <p>Por favor confírmanos antes del <strong>20 de febrero de 2027</strong>.</p>
         </header>
@@ -327,8 +388,13 @@
           </fieldset>
 
           <label class="field" id="field-confirmados">
-            <span>¿Cuántas personas asistirán?</span>
+            <span id="confirmados-label">¿Cuántas personas asistirán?</span>
             <select name="confirmados" id="confirmados"></select>
+          </label>
+
+          <label class="field" id="field-ninos" hidden>
+            <span>¿Cuántos niños asistirán?</span>
+            <select name="ninos" id="ninos"></select>
           </label>
 
           <label class="field" id="field-nombres">
@@ -357,7 +423,11 @@
   <!-- 11. Pie -->
   <footer class="footer">
     <p class="footer__names">Pau &amp; Luis</p>
-    <p>20 · 03 · 2027 · Hacienda Chimalpa</p>
+    <p>
+      <span data-listas="sabado">20 · 03 · 2027</span>
+      <span data-listas="civil finde" hidden>19 – 21 · 03 · 2027</span>
+      · Hacienda Chimalpa
+    </p>
     <button class="btn btn--light" type="button" id="add-calendar">Agregar a mi calendario</button>
   </footer>
 

@@ -4,8 +4,14 @@
   // URL del Web App de Google Apps Script: lista de invitados y respuestas (ver rsvp/LEEME.md).
   const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzcSewLJSWxglYoAd67pPE_UeMG9TrozDn09qX3O9_WF6Yfx-JS-HcugNsF--QlTrI9Sg/exec";
 
-  // 20 de marzo de 2027, 5:00 PM hora del centro de México (UTC-6, sin horario de verano).
-  const WEDDING_START = new Date("2027-03-20T17:00:00-06:00");
+  // Primer evento de cada lista, hora del centro de México (UTC-6, sin horario de verano).
+  //   civil: fin de semana + boda civil · finde: fin de semana · sabado: solo sábado
+  const START_BY_LISTA = {
+    civil: new Date("2027-03-19T19:00:00-06:00"),
+    finde: new Date("2027-03-19T22:00:00-06:00"),
+    sabado: new Date("2027-03-20T17:00:00-06:00"),
+  };
+  let lista = "sabado"; // versión pública hasta saber quién es el invitado
 
   /* ---------- Invitado a partir del link (?i=codigo) ---------- */
   // La lista vive en Google Sheets (pestaña Invitados); aquí se consulta por código.
@@ -20,7 +26,7 @@
     try { localStorage.setItem(cacheKey, JSON.stringify(guest)); } catch {}
   }
 
-  // → { nombre, pases, respuesta } o null si el código no está en la lista.
+  // → { nombre, pases, ninos, lista, respuesta } o null si el código no está en la lista.
   async function loadGuest() {
     if (!code) return null;
     const controller = new AbortController();
@@ -44,10 +50,47 @@
   window.invitadoListo = loadGuest();
 
   window.invitadoListo.then((guest) => {
+    applyLista(guest?.lista);
     if (!guest) return;
     const greeting = document.getElementById("guest-greeting");
     greeting.textContent = guest.nombre;
     greeting.hidden = false;
+  });
+
+  /* ---------- Versión de la invitación según la lista ---------- */
+  // Los bloques con data-listas="civil finde" solo se ven en esas listas.
+  function applyLista(nueva) {
+    lista = START_BY_LISTA[nueva] ? nueva : "sabado";
+    document.documentElement.dataset.lista = lista;
+    document.querySelectorAll("[data-listas]").forEach((el) => {
+      el.hidden = !el.dataset.listas.split(" ").includes(lista);
+    });
+    // Fin de semana: las tarjetas con foto de la boda van dentro de la pestaña del sábado.
+    if (lista !== "sabado") document.getElementById("dia-sab").append(document.querySelector(".timeline"));
+    tick(); // la cuenta regresiva cambia de evento según la lista
+  }
+
+  /* ---------- Pestañas del itinerario (fin de semana) ---------- */
+  const tabs = [...document.querySelectorAll('.days__tabs [role="tab"]')];
+
+  function selectTab(tab) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab));
+    tab.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (!step) return;
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      selectTab(next);
+      next.focus();
+    });
   });
 
   /* ---------- Música ---------- */
@@ -158,15 +201,14 @@
   const pad = (n) => String(n).padStart(2, "0");
 
   function tick() {
-    const diff = Math.max(0, WEDDING_START - Date.now());
+    const diff = Math.max(0, START_BY_LISTA[lista] - Date.now());
     const s = Math.floor(diff / 1000);
     units.days.textContent = Math.floor(s / 86400);
     units.hours.textContent = pad(Math.floor((s % 86400) / 3600));
     units.minutes.textContent = pad(Math.floor((s % 3600) / 60));
     units.seconds.textContent = pad(s % 60);
-    if (diff === 0) clearInterval(timer);
   }
-  const timer = setInterval(tick, 1000);
+  setInterval(tick, 1000);
   tick();
 
   /* ---------- Animación al hacer scroll ---------- */
@@ -270,25 +312,37 @@
 
   function setupRsvp(guest) {
     const passes = guest.pases;
-    document.getElementById("rsvp-passes").innerHTML =
-      passes === 1
+    const kids = guest.ninos || 0; // lugares para niños, aparte de los pases
+    const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
+
+    document.getElementById("rsvp-passes").innerHTML = kids
+      ? `Hemos reservado <strong>${plural(passes, "lugar", "lugares")} para adultos</strong> y <strong>${kids} para niños</strong> en su honor`
+      : passes === 1
         ? "Hemos reservado <strong>1 lugar</strong> en tu honor"
         : `Hemos reservado <strong>${passes} lugares</strong> en su honor`;
 
     const select = document.getElementById("confirmados");
     for (let n = passes; n >= 1; n--) {
-      select.add(new Option(n === 1 ? "1 persona" : `${n} personas`, n));
+      select.add(new Option(kids ? plural(n, "adulto", "adultos") : plural(n, "persona", "personas"), n));
+    }
+    if (kids) document.getElementById("confirmados-label").textContent = "¿Cuántos adultos asistirán?";
+
+    const selectKids = document.getElementById("ninos");
+    for (let n = kids; n >= 0; n--) {
+      selectKids.add(new Option(n === 0 ? "Ninguno" : plural(n, "niño", "niños"), n));
     }
 
     const done = document.getElementById("rsvp-done");
     const button = form.querySelector('button[type="submit"]');
     const fieldConfirmados = document.getElementById("field-confirmados");
+    const fieldNinos = document.getElementById("field-ninos");
     const fieldNombres = document.getElementById("field-nombres");
     let last = guest.respuesta; // última respuesta conocida
 
     function syncFields() {
       const attending = form.elements.asistencia.value !== "no";
       fieldConfirmados.hidden = !attending || passes === 1;
+      fieldNinos.hidden = !attending || kids === 0;
       fieldNombres.hidden = !attending;
     }
     syncFields();
@@ -308,13 +362,16 @@
       last = r;
       const attending = r.asistencia === "Sí";
       const n = Number(r.confirmados) || 0;
+      const k = Number(r.ninos) || 0;
       document.getElementById("rsvp-done-title").textContent =
         attending ? "¡Gracias por confirmar!" : "Gracias por avisarnos";
       const detail = document.getElementById("rsvp-done-detail");
       detail.textContent = "";
       if (attending) {
         detail.append("Asistirán ");
-        detail.appendChild(document.createElement("strong")).textContent = n === 1 ? "1 persona" : `${n} personas`;
+        detail.appendChild(document.createElement("strong")).textContent = k
+          ? `${plural(n, "adulto", "adultos")} y ${plural(k, "niño", "niños")}`
+          : plural(n, "persona", "personas");
         if (r.nombres) detail.append(`: ${r.nombres}`);
       } else {
         detail.append("Nos dijiste que no podrás acompañarnos. ¡Te vamos a extrañar!");
@@ -329,6 +386,7 @@
         const attending = last.asistencia === "Sí";
         form.elements.asistencia.value = attending ? "si" : "no";
         select.value = String(Math.min(Math.max(Number(last.confirmados) || 1, 1), passes));
+        selectKids.value = String(Math.min(Number(last.ninos) || 0, kids));
         form.elements.nombres.value = last.nombres || "";
         form.elements.alergias.value = last.alergias || "";
         form.elements.mensaje.value = last.mensaje || "";
@@ -348,6 +406,7 @@
       const answer = {
         asistencia: attending ? "Sí" : "No",
         confirmados: attending ? Math.min(Number(data.get("confirmados") || 1), passes) : 0,
+        ninos: attending ? Math.min(Number(data.get("ninos") || 0), kids) : 0,
         nombres: attending ? (data.get("nombres") || "") : "",
         alergias: data.get("alergias") || "",
         mensaje: data.get("mensaje") || "",
@@ -359,7 +418,7 @@
 
       try {
         // "no-cors": Google guarda los datos aunque el navegador no lea la respuesta.
-        // Nombre y pases los toma el script de la hoja, no de aquí.
+        // Nombre, pases y niños los toma el script de la hoja, no de aquí.
         await fetch(RSVP_ENDPOINT, {
           method: "POST",
           mode: "no-cors",
@@ -376,26 +435,42 @@
   }
 
   /* ---------- Agregar a calendario (.ics) ---------- */
+  // [inicio, fin, título, detalle] en UTC (centro de México = UTC-6). Las horas de fin son aproximadas.
+  const VIE_CIVIL = ["20270320T010000Z", "20270320T070000Z", "Boda civil, cena y pre-fiesta · Pau & Luis",
+    "Boda civil 7:00 PM · Cena 8:00 PM · Pre-fiesta 10:00 PM"];
+  const VIE_PREFIESTA = ["20270320T040000Z", "20270320T060000Z", "Pre-fiesta · Pau & Luis", "Pre-fiesta 10:00 PM"];
+  const SAB_COMPLETO = ["20270320T150000Z", "20270321T080000Z", "Boda de Pau & Luis",
+    "Desayuno 9:00 AM · Tour 11:15 AM · Brunch 1:00 PM · Ceremonia religiosa 5:00 PM · Cóctel 6:00 PM · Salón Campanas 7:00 PM"];
+  const SAB_BODA = ["20270320T230000Z", "20270321T080000Z", "Boda de Pau & Luis",
+    "Ceremonia religiosa 5:00 PM · Cóctel 6:00 PM · Salón Campanas (fiesta y cena) 7:00 PM"];
+  const DOM = ["20270321T170000Z", "20270321T190000Z", "Desayuno regional · Pau & Luis", "Desayuno regional 11:00 AM"];
+  const CALENDARIO = {
+    civil: [VIE_CIVIL, SAB_COMPLETO, DOM],
+    finde: [VIE_PREFIESTA, SAB_COMPLETO, DOM],
+    sabado: [SAB_BODA],
+  };
+
   document.getElementById("add-calendar").addEventListener("click", () => {
+    const eventos = CALENDARIO[lista].flatMap(([inicio, fin, titulo, detalle], i) => [
+      "BEGIN:VEVENT",
+      `UID:boda-pau-luis-${lista}-${i}@pauyluis`,
+      "DTSTAMP:20260101T000000Z",
+      `DTSTART:${inicio}`,
+      `DTEND:${fin}`,
+      `SUMMARY:${titulo}`,
+      "LOCATION:Hacienda Chimalpa\\, C. Morelos s/n\\, 43920 Chimalpa Tlalayote\\, Hgo.\\, México",
+      `DESCRIPTION:${detalle}`,
+      // Recordatorio un día antes, solo en el primer evento.
+      ...(i === 0 ? ["BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY",
+        "DESCRIPTION:Mañana empieza la boda de Pau & Luis", "END:VALARM"] : []),
+      "END:VEVENT",
+    ]);
     const ics = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
       "PRODID:-//Pau y Luis//Boda//ES",
       "CALSCALE:GREGORIAN",
-      "BEGIN:VEVENT",
-      "UID:boda-pau-luis-20270320@pauyluis",
-      "DTSTAMP:20260101T000000Z",
-      "DTSTART:20270320T230000Z",
-      "DTEND:20270321T070000Z",
-      "SUMMARY:Boda de Pau & Luis",
-      "LOCATION:Hacienda Chimalpa\\, C. Morelos s/n\\, 43920 Chimalpa Tlalayote\\, Hgo.\\, México",
-      "DESCRIPTION:Ceremonia religiosa 5:00 PM · Cóctel 6:00 PM · Banquete 7:00 PM",
-      "BEGIN:VALARM",
-      "TRIGGER:-P1D",
-      "ACTION:DISPLAY",
-      "DESCRIPTION:Mañana es la boda de Pau & Luis",
-      "END:VALARM",
-      "END:VEVENT",
+      ...eventos,
       "END:VCALENDAR",
     ].join("\r\n");
 

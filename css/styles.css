@@ -226,6 +226,13 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
   letter-spacing: 0.2em;
   margin: 0;
 }
+.hero__weekend {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 3.5vw, 1.3rem);
+  margin: 0.4rem 0 0;
+  opacity: 0.95;
+}
 .hero__place {
   font-size: 0.8rem;
   letter-spacing: 0.25em;
@@ -359,6 +366,65 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
   .event img { aspect-ratio: 3 / 4; }
 }
 
+/* Itinerario de fin de semana: pestañas por día */
+.days { margin-bottom: 1rem; }
+.days__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.days__tabs button {
+  flex: 1;
+  max-width: 180px;
+  padding: 0.8rem 0.5rem;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: 500 0.75rem var(--font-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.days__tabs button small {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.days__tabs button[aria-selected="true"] {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--white);
+}
+.days__tabs button:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; }
+
+.schedule {
+  list-style: none;
+  margin: 0 auto 2rem;
+  padding: 0;
+  max-width: 560px;
+}
+.schedule li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--sand);
+}
+.schedule li:last-child { border-bottom: 0; }
+.schedule time {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--terracotta);
+  line-height: 1.3;
+}
+.schedule h3 { margin: 0; font-size: 1.35rem; }
+.schedule p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+
 /* 5. Lugar */
 .address { font-size: 0.95rem; }
 .venue { display: grid; gap: 1.5rem; }
@@ -459,6 +525,18 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
   color: var(--ink-soft);
 }
 @media (min-width: 700px) { .dress { grid-template-columns: 1fr 1fr; } }
+
+.dress__friday {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: var(--cream);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+}
+.dress__friday h3 { color: var(--terracotta); margin-bottom: 0.25rem; }
+.dress__friday p:last-child { margin: 0; }
+.dress__day { text-align: center; }
 
 /* 8. Regalos */
 .cards {
