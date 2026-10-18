@@ -534,7 +534,7 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
 }
 @media (min-width: 700px) { .dress { grid-template-columns: 1fr 1fr; } }
 
-.dress__friday {
+.dress__daycard {
   padding: 1.5rem;
   margin-bottom: 2rem;
   text-align: center;
@@ -542,8 +542,8 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
   border: 1px solid var(--sand);
   border-radius: var(--radius);
 }
-.dress__friday h3 { color: var(--terracotta); margin-bottom: 0.25rem; }
-.dress__friday p:last-child { margin: 0; }
+.dress__daycard h3 { color: var(--terracotta); margin-bottom: 0.25rem; }
+.dress__daycard p:last-child { margin: 0; }
 .dress__day { text-align: center; }
 
 /* 8. Regalos */
