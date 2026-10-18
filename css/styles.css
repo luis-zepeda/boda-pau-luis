@@ -461,6 +461,8 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
 .gallery__item:hover img { transform: scale(1.05); }
 .gallery__item--wide { grid-column: span 2; }
 .gallery__item--tall { grid-row: span 2; }
+/* A lo ancho solo en celular; en escritorio ocupa una celda. */
+.gallery__item--wide-sm { grid-column: span 2; }
 /* Fotos extra: ocultas hasta "Ver más fotos". */
 .gallery:not(.is-open) .gallery__item--extra { display: none; }
 .gallery__more-wrap { text-align: center; margin-top: 2rem; }
@@ -470,6 +472,7 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
 @media (min-width: 800px) {
   .gallery { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 240px; }
   .gallery__item--big { grid-column: span 2; grid-row: span 2; }
+  .gallery__item--wide-sm { grid-column: auto; }
 }
 
 /* 7. Vestimenta */
