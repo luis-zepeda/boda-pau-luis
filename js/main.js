@@ -227,6 +227,16 @@
     revealEls.forEach((el) => el.classList.add("is-visible"));
   }
 
+  /* ---------- Galería: "Ver más fotos" ---------- */
+  const gallery = document.querySelector(".gallery");
+  const moreBtn = document.getElementById("gallery-more");
+  const extras = gallery.querySelectorAll(".gallery__item--extra").length;
+  moreBtn.textContent = `Ver ${extras} fotos más`;
+  moreBtn.addEventListener("click", () => {
+    gallery.classList.add("is-open");
+    moreBtn.parentElement.remove();
+  });
+
   /* ---------- Lightbox de la galería ---------- */
   // Cada grupo (data-lightbox) se navega por separado: galería, vestimenta.
   const lightbox = document.getElementById("lightbox");
