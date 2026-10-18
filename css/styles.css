@@ -461,6 +461,8 @@ html.sobre-activo:not(.sobre-saliendo) .hero__content { animation-play-state: pa
 .gallery__item:hover img { transform: scale(1.05); }
 .gallery__item--wide { grid-column: span 2; }
 .gallery__item--tall { grid-row: span 2; }
+/* Panorámica: recorta más arriba para no cortar las caras. */
+.gallery__item--pano img { object-position: 50% 25%; }
 /* Escritorio: 3 columnas; la foto principal ocupa 2×2 y las verticales 1×2. */
 @media (min-width: 800px) {
   .gallery { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 240px; }
