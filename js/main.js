@@ -273,21 +273,6 @@
     touchX = null;
   });
 
-  /* ---------- Copiar CLABE ---------- */
-  document.querySelectorAll("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const text = document.querySelector(btn.dataset.copy).textContent.trim();
-      const label = btn.textContent;
-      try {
-        await navigator.clipboard.writeText(text);
-        btn.textContent = "¡Copiada!";
-      } catch {
-        btn.textContent = text;
-      }
-      setTimeout(() => { btn.textContent = label; }, 2000);
-    });
-  });
-
   /* ---------- RSVP ---------- */
   const form = document.getElementById("rsvp-form");
   const status = document.getElementById("rsvp-status");
